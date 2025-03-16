@@ -1,4 +1,4 @@
-package com.savenko.mui2
+package com.savenko.mui2.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.savenko.mui2.ui.theme.MUI2Theme
+import com.savenko.mui2.presentation.theme.MUI2Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

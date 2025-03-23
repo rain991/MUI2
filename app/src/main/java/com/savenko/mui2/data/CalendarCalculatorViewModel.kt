@@ -21,7 +21,9 @@ class CalendarCalculatorViewModel(
             date1 = Date(),
             date2 = Date(),
             isDate1PickerVisible = false,
+            isTime1PickerVisible = false,
             isDate2PickerVisible = false,
+            isTime2PickerVisible = false,
             dateDifferenceCalculation = null,
             error = null
         )
@@ -67,10 +69,26 @@ class CalendarCalculatorViewModel(
         }
     }
 
+    fun setTime1PickerVisibility(value: Boolean) {
+        _dateDifferenceScreenState.update {
+            _dateDifferenceScreenState.value.copy(
+                isTime1PickerVisible = value
+            )
+        }
+    }
+
     fun setDate2PickerVisibility(value: Boolean) {
         _dateDifferenceScreenState.update {
             _dateDifferenceScreenState.value.copy(
                 isDate2PickerVisible = value
+            )
+        }
+    }
+
+    fun setTime2PickerVisibility(value: Boolean) {
+        _dateDifferenceScreenState.update {
+            _dateDifferenceScreenState.value.copy(
+                isTime2PickerVisible = value
             )
         }
     }

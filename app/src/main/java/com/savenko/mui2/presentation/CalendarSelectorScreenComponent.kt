@@ -13,8 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mui1.data.CalendarCalculatorViewModel
+import com.example.mui1.data.formatDateAndTime
 
 @Composable
 internal fun CalendarSelectorScreenComponent(
@@ -27,16 +29,18 @@ internal fun CalendarSelectorScreenComponent(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(modifier = Modifier.fillMaxWidth().clickable{  }, horizontalAlignment = Alignment.CenterHorizontally){
+        Column(modifier = Modifier.fillMaxWidth().clickable{ viewModel.setDate1PickerVisibility(true) }, horizontalAlignment = Alignment.CenterHorizontally){
             Text(text = "Date 1", style = MaterialTheme.typography.headlineMedium)
             Spacer(Modifier.height(8.dp))
-            Text(text = "${screenState.value.date1}", style = MaterialTheme.typography.headlineSmall)
+            Text(text = screenState.value.date1.formatDateAndTime(), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
         }
 
-        Column(modifier = Modifier.fillMaxWidth(). clickable{  }, horizontalAlignment = Alignment.CenterHorizontally){
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Column(modifier = Modifier.fillMaxWidth(). clickable{ viewModel.setDate2PickerVisibility(true) }, horizontalAlignment = Alignment.CenterHorizontally){
             Text(text = "Date 2", style = MaterialTheme.typography.headlineMedium)
             Spacer(Modifier.height(8.dp))
-            Text(text = "${screenState.value.date2}", style = MaterialTheme.typography.headlineSmall)
+            Text(text = screenState.value.date2.formatDateAndTime(), style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
         }
 
         AnimatedVisibility (screenState.value.dateDifferenceCalculation != null){

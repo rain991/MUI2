@@ -10,6 +10,12 @@ fun convertMillisToDate(millis: Long): String {
     return formatter.format(Date(millis))
 }
 
+
+fun Date.formatDateAndTime(): String {
+    val formatter = SimpleDateFormat("HH:mm:ss, dd MMMM yyyy", Locale.getDefault())
+    return formatter.format(this)
+}
+
 fun Date.formatDateWithYear(isLongDayOfWeekName: Boolean = true): String {
     val locale = Locale.getDefault()
     val calendar = Calendar.getInstance().apply {

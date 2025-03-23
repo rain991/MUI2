@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mui1.data.CalendarCalculatorViewModel
 import com.savenko.mui2.presentation.CalendarSelectorScreenComponent
@@ -29,7 +30,8 @@ internal fun CalendarSelectorScreen(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(
                 text = "Date Difference Calculator",
-                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold)
+                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.SemiBold),
+                textAlign = TextAlign.Center
             )
         }
         Spacer(Modifier.height(60.dp))

@@ -11,10 +11,14 @@ import androidx.compose.runtime.Composable
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerModal(
+    selectedTimeMillis: Long,
     onDateSelected: (Long?) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = selectedTimeMillis,
+        yearRange = -4000..4000
+    )
 
     DatePickerDialog(
         onDismissRequest = onDismiss,

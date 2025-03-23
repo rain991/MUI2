@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mui1.data.CalendarCalculatorViewModel
 import com.example.mui1.data.formatDateAndTime
+import com.savenko.mui2.presentation.dateAndTimePickers.TimePickerModal
+import java.util.Calendar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CalendarSelectorScreenComponent(
     viewModel: CalendarCalculatorViewModel
@@ -77,6 +81,35 @@ internal fun CalendarSelectorScreenComponent(
                     textAlign = TextAlign.Center
                 )
             }
+        }
+
+        if (screenState.value.isTime1PickerVisible || screenState.value.isTime2PickerVisible) {
+            val timeCalendar = Calendar.getInstance().apply {
+                this.time =
+                    if (screenState.value.isTime1PickerVisible) screenState.value.date1 else screenState.value.date2
+            }
+            TimePickerModal(
+                currentTimeCalendar = timeCalendar,
+                onConfirm = { timePickerState ->
+                    val calendar = Calendar.getInstance().apply{
+                        timeCalendar
+                    }
+                    calendar.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
+                    calendar.set(Calendar.MINUTE, timePickerState.minute)
+                    if(screenState.value.isTime1PickerVisible){
+                        viewModel.setDate1(calendar.time)
+                    }else{
+                        viewModel.setDate2(calendar.time)
+                    }
+                    viewModel.hideAllPickers()
+                }) {
+                viewModel.hideAllPickers()
+            }
+
+        }
+
+        if (screenState.value.isDate1PickerVisible || screenState.value.isDate2PickerVisible) {
+
         }
 
         AnimatedVisibility(screenState.value.dateDifferenceCalculation != null) {

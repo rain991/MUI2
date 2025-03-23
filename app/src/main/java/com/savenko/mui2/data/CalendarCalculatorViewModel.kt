@@ -61,6 +61,13 @@ class CalendarCalculatorViewModel(
         _dateDifferenceScreenState.update { _dateDifferenceScreenState.value.copy(date2 = value) }
     }
 
+    fun hideAllPickers(){
+        setDate1PickerVisibility(false)
+        setDate2PickerVisibility(false)
+        setTime1PickerVisibility(false)
+        setTime2PickerVisibility(false)
+    }
+
     fun setDate1PickerVisibility(value: Boolean) {
         _dateDifferenceScreenState.update {
             _dateDifferenceScreenState.value.copy(

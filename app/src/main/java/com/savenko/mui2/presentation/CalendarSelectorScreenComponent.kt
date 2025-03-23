@@ -1,0 +1,46 @@
+package com.savenko.mui2.presentation
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.mui1.data.CalendarCalculatorViewModel
+
+@Composable
+internal fun CalendarSelectorScreenComponent(
+    viewModel: CalendarCalculatorViewModel
+) {
+    val screenState = viewModel.dateDifferenceScreenState.collectAsState()
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().clickable{  }, horizontalAlignment = Alignment.CenterHorizontally){
+            Text(text = "Date 1", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(8.dp))
+            Text(text = "${screenState.value.date1}", style = MaterialTheme.typography.headlineSmall)
+        }
+
+        Column(modifier = Modifier.fillMaxWidth(). clickable{  }, horizontalAlignment = Alignment.CenterHorizontally){
+            Text(text = "Date 2", style = MaterialTheme.typography.headlineMedium)
+            Spacer(Modifier.height(8.dp))
+            Text(text = "${screenState.value.date2}", style = MaterialTheme.typography.headlineSmall)
+        }
+
+        AnimatedVisibility (screenState.value.dateDifferenceCalculation != null){
+            DateDifferenceResultComposable(screenState.value.dateDifferenceCalculation!!)
+        }
+    }
+}

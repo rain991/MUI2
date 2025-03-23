@@ -20,6 +20,8 @@ class CalendarCalculatorViewModel(
         DateDifferenceScreenState(
             date1 = Date(),
             date2 = Date(),
+            isDate1PickerVisible = false,
+            isDate2PickerVisible = false,
             dateDifferenceCalculation = null,
             error = null
         )
@@ -44,7 +46,7 @@ class CalendarCalculatorViewModel(
                 date2 = date2.time
             )
         )
-        viewModelScope.launch{
+        viewModelScope.launch {
             dateDifferenceCalculationDao.insertItem(dateDifferenceScreenState.value.dateDifferenceCalculation!!)
         }
     }
@@ -55,6 +57,22 @@ class CalendarCalculatorViewModel(
 
     fun setDate2(value: Date) {
         _dateDifferenceScreenState.update { _dateDifferenceScreenState.value.copy(date2 = value) }
+    }
+
+    fun setDate1PickerVisibility(value: Boolean) {
+        _dateDifferenceScreenState.update {
+            _dateDifferenceScreenState.value.copy(
+                isDate1PickerVisible = value
+            )
+        }
+    }
+
+    fun setDate2PickerVisibility(value: Boolean) {
+        _dateDifferenceScreenState.update {
+            _dateDifferenceScreenState.value.copy(
+                isDate2PickerVisible = value
+            )
+        }
     }
 
     private fun setDateDifferenceCalculation(value: DateDifferenceCalculation) {

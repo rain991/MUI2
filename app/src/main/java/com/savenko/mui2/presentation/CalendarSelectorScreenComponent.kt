@@ -19,8 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mui1.data.CalendarCalculatorViewModel
 import com.example.mui1.data.formatDateAndTime
+import com.savenko.mui2.presentation.dateAndTimePickers.DatePickerModal
 import com.savenko.mui2.presentation.dateAndTimePickers.TimePickerModal
 import java.util.Calendar
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,17 +93,18 @@ internal fun CalendarSelectorScreenComponent(
             TimePickerModal(
                 currentTimeCalendar = timeCalendar,
                 onConfirm = { timePickerState ->
-                    val calendar = Calendar.getInstance().apply{
+                    val calendar = Calendar.getInstance().apply {
                         timeCalendar
                     }
                     calendar.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
                     calendar.set(Calendar.MINUTE, timePickerState.minute)
-                    if(screenState.value.isTime1PickerVisible){
+                    if (screenState.value.isTime1PickerVisible) {
                         viewModel.setDate1(calendar.time)
-                    }else{
+                    } else {
                         viewModel.setDate2(calendar.time)
                     }
                     viewModel.hideAllPickers()
+                    viewModel.calculateDateDifference()
                 }) {
                 viewModel.hideAllPickers()
             }
@@ -109,7 +112,23 @@ internal fun CalendarSelectorScreenComponent(
         }
 
         if (screenState.value.isDate1PickerVisible || screenState.value.isDate2PickerVisible) {
-
+            val selectedTimeMillis = if (screenState.value.isDate1PickerVisible) {
+                screenState.value.date1
+            } else {
+                screenState.value.date2
+            }
+            DatePickerModal(
+                selectedTimeMillis = selectedTimeMillis.time,
+                onDateSelected = { selectedDate ->
+                    selectedDate?.let {
+                        if (screenState.value.isDate1PickerVisible) {
+                            viewModel.setDate1(Date(it))
+                        } else {
+                            viewModel.setDate2(Date(it))
+                        }
+                    }
+                }) {
+            }
         }
 
         AnimatedVisibility(screenState.value.dateDifferenceCalculation != null) {

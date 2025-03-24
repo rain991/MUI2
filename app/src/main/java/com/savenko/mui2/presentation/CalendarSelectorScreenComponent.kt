@@ -19,8 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.mui1.data.CalendarCalculatorViewModel
 import com.example.mui1.data.formatDateAndTime
+import com.savenko.mui2.presentation.dateAndTimePickers.DatePicker
 import com.savenko.mui2.presentation.dateAndTimePickers.DatePickerModal
-import com.savenko.mui2.presentation.dateAndTimePickers.TimePickerModal
+import com.savenko.mui2.presentation.dateAndTimePickers.TimePickerDialog
 import java.util.Calendar
 import java.util.Date
 
@@ -90,8 +91,9 @@ internal fun CalendarSelectorScreenComponent(
                 this.time =
                     if (screenState.value.isTime1PickerVisible) screenState.value.date1 else screenState.value.date2
             }
-            TimePickerModal(
+            TimePickerDialog(
                 currentTimeCalendar = timeCalendar,
+                isVisible = true,
                 onConfirm = { timePickerState ->
                     val calendar = Calendar.getInstance().apply {
                         timeCalendar
@@ -117,7 +119,8 @@ internal fun CalendarSelectorScreenComponent(
             } else {
                 screenState.value.date2
             }
-            DatePickerModal(
+            DatePicker(
+                isVisible = true,
                 selectedTimeMillis = selectedTimeMillis.time,
                 onDateSelected = { selectedDate ->
                     selectedDate?.let {

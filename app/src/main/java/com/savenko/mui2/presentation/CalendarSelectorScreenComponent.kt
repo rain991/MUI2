@@ -44,7 +44,7 @@ internal fun CalendarSelectorScreenComponent(
         ) {
             Text(text = "Date 1", style = MaterialTheme.typography.headlineMedium)
             Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 val formattedDate = screenState.value.date1.formatDateAndTime()
 
                 Text(text = formattedDate.take(9), modifier = Modifier.clickable {
@@ -70,7 +70,7 @@ internal fun CalendarSelectorScreenComponent(
         ) {
             Text(text = "Date 2", style = MaterialTheme.typography.headlineMedium)
             Spacer(Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 val formattedDate = screenState.value.date2.formatDateAndTime()
 
                 Text(text = formattedDate.take(9), modifier = Modifier.clickable {
@@ -129,11 +129,16 @@ internal fun CalendarSelectorScreenComponent(
                         } else {
                             viewModel.setDate2(Date(it))
                         }
+                        viewModel.hideAllPickers()
+                        viewModel.calculateDateDifference()
                     }
                 }) {
+                viewModel.hideAllPickers()
             }
         }
-
+        if(screenState.value.dateDifferenceCalculation != null){
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         AnimatedVisibility(screenState.value.dateDifferenceCalculation != null) {
             DateDifferenceResultComposable(screenState.value.dateDifferenceCalculation!!)
         }

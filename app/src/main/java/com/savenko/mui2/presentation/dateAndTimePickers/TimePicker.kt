@@ -29,12 +29,6 @@ fun TimePickerDialog(
             onDismissRequest = onDismiss,
             title = { Text("Select Time") },
             text = {
-                val timePickerState = rememberTimePickerState(
-                    initialHour = currentTimeCalendar.get(Calendar.HOUR_OF_DAY),
-                    initialMinute = currentTimeCalendar.get(Calendar.MINUTE),
-                    is24Hour = true,
-                )
-
                 Column {
                     TimeInput(state = timePickerState)
                 }

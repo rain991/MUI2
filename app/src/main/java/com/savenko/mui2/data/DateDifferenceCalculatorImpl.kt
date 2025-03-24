@@ -4,6 +4,7 @@ import android.util.Log
 import java.time.Duration
 import java.time.Instant
 import java.util.Date
+import kotlin.math.absoluteValue
 
 class DateDifferenceCalculatorImpl : DateDifferenceCalculator {
     override fun calculateDateDifference(
@@ -19,13 +20,13 @@ class DateDifferenceCalculatorImpl : DateDifferenceCalculator {
             val minutes = duration.toMinutes() % 60
             val seconds = duration.seconds % 60
             return DateDifferenceCalculation(
-                InputDate1 = date1,
-                InputDate2 = date2,
-                WeeksDifference = weeks.toInt(),
-                DaysDifference = days.toInt(),
-                HoursDifference = hours.toInt(),
-                MinutesDifference = minutes.toInt(),
-                SecondsDifference = seconds.toInt()
+                InputDate1 = date1.absoluteValue,
+                InputDate2 = date2.absoluteValue,
+                WeeksDifference = weeks.toInt().absoluteValue,
+                DaysDifference = days.toInt().absoluteValue,
+                HoursDifference = (hours.toInt() + 1).absoluteValue,
+                MinutesDifference = minutes.toInt().absoluteValue,
+                SecondsDifference = seconds.toInt().absoluteValue
             )
         } catch (e: Exception) {
             Log.e(DateDifferenceCalculatorImpl::class.java.simpleName, e.message, e)

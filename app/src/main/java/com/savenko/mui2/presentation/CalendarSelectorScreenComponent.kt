@@ -88,28 +88,38 @@ internal fun CalendarSelectorScreenComponent(
 
         if (screenState.value.isTime1PickerVisible || screenState.value.isTime2PickerVisible) {
             val timeCalendar = Calendar.getInstance().apply {
-                this.time =
-                    if (screenState.value.isTime1PickerVisible) screenState.value.date1 else screenState.value.date2
+                timeInMillis = if (screenState.value.isTime1PickerVisible) {
+                    screenState.value.date1.time
+                } else {
+                    screenState.value.date2.time
+                }
             }
+
             TimePickerDialog(
                 currentTimeCalendar = timeCalendar,
                 isVisible = true,
                 onConfirm = { timePickerState ->
                     val calendar = Calendar.getInstance().apply {
-                        timeCalendar
+                        timeInMillis = timeCalendar.timeInMillis
                     }
+
                     calendar.set(Calendar.HOUR_OF_DAY, timePickerState.hour)
                     calendar.set(Calendar.MINUTE, timePickerState.minute)
+
                     if (screenState.value.isTime1PickerVisible) {
-                        viewModel.setDate1(calendar.time)
+                        viewModel.setDate1(Date(calendar.timeInMillis))
                     } else {
-                        viewModel.setDate2(calendar.time)
+                        viewModel.setDate2(Date(calendar.timeInMillis))
                     }
+
                     viewModel.hideAllPickers()
                     viewModel.calculateDateDifference()
-                }) {
-                viewModel.hideAllPickers()
-            }
+                },
+                onDismiss = {
+                    viewModel.hideAllPickers()
+                }
+            )
+
 
         }
 
@@ -136,7 +146,7 @@ internal fun CalendarSelectorScreenComponent(
                 viewModel.hideAllPickers()
             }
         }
-        if(screenState.value.dateDifferenceCalculation != null){
+        if (screenState.value.dateDifferenceCalculation != null) {
             Spacer(modifier = Modifier.height(16.dp))
         }
         AnimatedVisibility(screenState.value.dateDifferenceCalculation != null) {
